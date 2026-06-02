@@ -288,7 +288,10 @@
     transition: transform 0.2s, box-shadow 0.2s;
   }
   .project-card:hover { transform: translateY(-2px); box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
-  .project-layout { display: grid; grid-template-columns: 1fr 1.6fr; }
+  
+  /* FIXED: Added minmax(0, 1fr) so content can shrink natively and won't overflow */
+  .project-layout { display: grid; grid-template-columns: 1fr minmax(0, 1.6fr); }
+  
   .project-image {
     background: linear-gradient(135deg, var(--accent-light) 0%, #d4e8da 100%);
     min-height: 280px;
@@ -338,15 +341,17 @@
     margin-bottom: 0.3rem;
   }
   .field-value { font-size: 0.875rem; color: var(--ink-muted); }
+  
+  /* FIXED: Applied global break properties for documentation links so URLs wrap properly */
   .doc-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
+    display: inline-block;
     font-size: 0.85rem;
     color: var(--accent);
     font-weight: 500;
     text-decoration: none;
     margin-top: 0.25rem;
+    word-break: break-all;
+    overflow-wrap: anywhere;
   }
   .doc-link:hover { text-decoration: underline; }
   .project-skills { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.4rem; }
@@ -397,7 +402,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a class="nav-logo" href="#" onclick="showSection('home')">Portfolio</a>
@@ -410,7 +414,6 @@
   </div>
 </nav>
 
-<!-- ══════════════ HOME ══════════════ -->
 <section id="home" class="page-section active">
   <div class="hero">
     <p class="hero-eyebrow">Welcome to my portfolio</p>
@@ -421,7 +424,6 @@
   </div>
 </section>
 
-<!-- ══════════════ ABOUT ══════════════ -->
 <section id="about" class="page-section">
   <div class="container">
     <div class="section-header">
@@ -432,17 +434,18 @@
     <div class="about-grid">
       <div>
         <div class="about-photo" style="padding: 0; overflow: hidden;">
-            <img 
-                src="portfolioss.png" 
-                alt="Prabhav Yeddanapudi" 
-                style="width: 100%; height: 100%; object-fit: cover; object-position: center top; border-radius: 10px;"
-  />
-</div>
+          <img 
+            src="portfolioss.png" 
+            alt="Prabhav Yeddanapudi" 
+            style="width: 100%; height: 100%; object-fit: cover; object-position: center top; border-radius: 10px;"
+          />
+        </div>
       </div>
       <div class="about-content">
         <h3>Prabhav Yeddanapudi</h3>
         <p>
           I'm Prabhav Yeddanapudi, a rising senior at Emerald High School in Dublin, California, where I was born and raised. From an early age I've been drawn to understanding how things work at their most fundamental level, which is what led me to electrical engineering. I find genuine satisfaction in building things that actually function in the real world.
+        </p>
         <p>
           Over the years I've built a solid foundation across both software and hardware. I'm comfortable writing in Java, Python, and HTML, and I've paired that with hands-on experience in hardware design and circuit analysis. I enjoy that intersection, the moment where code meets physical components and something tangible comes to life.
         </p>
@@ -472,7 +475,6 @@
   </div>
 </section>
 
-<!-- ══════════════ RESUME ══════════════ -->
 <section id="resume" class="page-section">
   <div class="container">
     <div class="section-header">
@@ -481,7 +483,6 @@
       <p>My education, experience, and skills at a glance.</p>
     </div>
     <div class="resume-grid">
-      <!-- Sidebar nav -->
       <aside class="resume-sidebar">
         <ul class="resume-nav">
           <li><button class="active" onclick="scrollToResume('r-contact')">Contact</button></li>
@@ -490,9 +491,7 @@
           <li><button onclick="scrollToResume('r-skills')">Skills</button></li>
         </ul>
       </aside>
-      <!-- Main content -->
       <main>
-        <!-- Contact -->
         <div class="resume-section" id="r-contact">
           <h3>Contact Information</h3>
           <div class="resume-entry">
@@ -503,7 +502,6 @@
             </div>
           </div>
         </div>
-        <!-- Education -->
         <div class="resume-section" id="r-education">
           <h3>Education</h3>
           <div class="resume-entry">
@@ -519,7 +517,6 @@
             </div>
           </div>
         </div>
-        <!-- Experience -->
         <div class="resume-section" id="r-experience">
           <h3>Technical Activities</h3>
           <div class="resume-entry">
@@ -550,9 +547,7 @@
             </div>
             <div class="entry-date">[June 2025] – [July 2025]</div>
           </div>
-          
         </div>
-        <!-- Skills -->
         <div class="resume-section" id="r-skills">
           <h3>Skills</h3>
           <div class="resume-entry">
@@ -583,7 +578,6 @@
   </div>
 </section>
 
-<!-- ══════════════ PROJECTS ══════════════ -->
 <section id="projects" class="page-section">
   <div class="container">
     <div class="section-header">
@@ -593,59 +587,56 @@
     </div>
     <div class="projects-grid">
 
-      <!-- PROJECT 1 -->
-<div class="project-card">
-  <div class="project-layout">
-    <div class="project-image">
-      <div class="project-image-icon"></div>
-    </div>
-    <div class="project-content">
-      <div class="project-meta">
-        <span class="meta-tag meta-course">Los Altos Hackathon</span>
-        <span class="meta-tag meta-date">🗓 April 2025</span>
+      <div class="project-card">
+        <div class="project-layout">
+          <div class="project-image">
+            <div class="project-image-icon"></div>
+          </div>
+          <div class="project-content">
+            <div class="project-meta">
+              <span class="meta-tag meta-course">Los Altos Hackathon</span>
+              <span class="meta-tag meta-date">🗓 April 2025</span>
+            </div>
+
+            <h3>RF: Earthquake Predictor</h3>
+
+            <a href="https://www.youtube.com/watch?v=K_6FJlDvidQ&t=88s" target="_blank" class="project-link" style="display: inline-block; margin-bottom: 1rem; text-decoration: none;">
+              ▶️ Watch Demo
+            </a>
+
+            <p class="project-desc">
+              In a group, I helped develop Speech-to-Sign Aid, an interactive accessibility tool that converts live speech into real-time visual sign-based representations for Deaf and hard-of-hearing users. The application processes spoken language or captions from live input, identifies key words and phrases, and maps them to a structured vocabulary of visual signs and symbols. By transforming spoken content into synchronized visual cues, the project aims to improve comprehension speed and reduce cognitive load in fast-paced environments such as classrooms and meetings.
+            </p>
+
+            <div class="project-sections">
+              <div class="project-field">
+                <div class="field-label">My Responsibilities</div>
+                <div class="field-value">
+                  I contributed to building the real-time processing pipeline that ingests speech or caption data, normalizes the text, and maps it to a predefined library of sign and symbol animations. I helped design the rule-based translation system used to detect keywords and phrase structures and connect them to corresponding visual outputs. Additionally, I worked on integrating the backend logic with the frontend rendering system to ensure low-latency, synchronized display of visual signs, and implemented fallback handling for unsupported or out-of-vocabulary words.
+                </div>
+              </div>
+
+              <div class="project-field">
+                <div class="field-label">What I Learned</div>
+                <div class="field-value">
+                  Through developing Speech-to-Sign Aid, I gained hands-on experience working with real-time data processing, speech-to-text systems, and rule-based NLP mapping approaches. I also learned how to design for accessibility constraints, balance speed with accuracy in real-time systems, and build fallback mechanisms for incomplete language coverage while maintaining usability in live environments.
+                </div>
+              </div>
+
+              <div class="project-field">
+                <div class="field-label">Skills Exemplified</div>
+                <div class="project-skills">
+                  <span class="skill-tag">Gemini-API</span>
+                  <span class="skill-tag">Python</span>
+                  <span class="skill-tag">HTML</span>
+                  <span class="skill-tag">JavaScript</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <h3>RF: Earthquake Predictor</h3>
-
-      <!-- ADDED LINK -->
-      <a href="https://www.youtube.com/watch?v=K_6FJlDvidQ&t=88s" target="_blank" class="project-link">
-        ▶️ Watch Demo
-      </a>
-
-      <p class="project-desc">
-        In a group, I helped develop Speech-to-Sign Aid, an interactive accessibility tool that converts live speech into real-time visual sign-based representations for Deaf and hard-of-hearing users. The application processes spoken language or captions from live input, identifies key words and phrases, and maps them to a structured vocabulary of visual signs and symbols. By transforming spoken content into synchronized visual cues, the project aims to improve comprehension speed and reduce cognitive load in fast-paced environments such as classrooms and meetings.
-      </p>
-
-      <div class="project-sections">
-        <div class="project-field">
-          <div class="field-label">My Responsibilities</div>
-          <div class="field-value">
-            I contributed to building the real-time processing pipeline that ingests speech or caption data, normalizes the text, and maps it to a predefined library of sign and symbol animations. I helped design the rule-based translation system used to detect keywords and phrase structures and connect them to corresponding visual outputs. Additionally, I worked on integrating the backend logic with the frontend rendering system to ensure low-latency, synchronized display of visual signs, and implemented fallback handling for unsupported or out-of-vocabulary words.
-          </div>
-        </div>
-
-        <div class="project-field">
-          <div class="field-label">What I Learned</div>
-          <div class="field-value">
-            Through developing Speech-to-Sign Aid, I gained hands-on experience working with real-time data processing, speech-to-text systems, and rule-based NLP mapping approaches. I also learned how to design for accessibility constraints, balance speed with accuracy in real-time systems, and build fallback mechanisms for incomplete language coverage while maintaining usability in live environments.
-          </div>
-        </div>
-
-        <div class="project-field">
-          <div class="field-label">Skills Exemplified</div>
-          <div class="project-skills">
-            <span class="skill-tag">Gemini-API</span>
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">HTML</span>
-            <span class="skill-tag">JavaScript</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-      <!-- PROJECT 2 -->
       <div class="project-card">
         <div class="project-layout">
           <div class="project-image" style="background: linear-gradient(135deg, #fef3e2 0%, #fcdcb0 100%); color: #92500a;">
@@ -657,10 +648,10 @@
               <span class="meta-tag meta-date">🗓 November 2025</span>
             </div>
             <h3>Basketball Trade Simulator</h3>
-            <!-- ADDED LINK -->
-<a href="https://drive.google.com/file/d/16pyS79Pz90k96PIWIMi678D70lmNbRzQ/view?usp=sharing" target="_blank" class="project-link">
-  ▶️ Watch Demo
-</a>
+            
+            <a href="https://drive.google.com/file/d/16pyS79Pz90k96PIWIMi678D70lmNbRzQ/view?usp=sharing" target="_blank" class="project-link" style="display: inline-block; margin-bottom: 1rem; text-decoration: none;">
+              ▶️ Watch Demo
+            </a>
             <p class="project-desc">
               I developed an interactive Basketball Trade Simulator in Java that allows users to act as a general manager making roster decisions for a fictional NBA team. The objective was to create a decision-based simulation game that demonstrates conditional logic, user input handling, and branching outcomes. The project addresses the challenge of building engaging, interactive applications using core programming concepts. The final product is a fully functional console-based game where user choices directly influence different career and team outcomes.
             </p>
@@ -684,9 +675,6 @@
               <div class="project-field">
                 <div class="field-label">Documentation</div>
                 <a href="https://instructional-resources.pltw.org/PLTW_Computer_Science/30181_ComputerScienceA/English_External_Files/CSA_138_ChooseYourPath_ScoringGuidelines.pdf" class="doc-link" target="_blank">📋 Grading Rubric → https://instructional-resources.pltw.org/PLTW_Computer_Science/30181_ComputerScienceA/English_External_Files/CSA_138_ChooseYourPath_ScoringGuidelines.pdf</a>
-
-
-                </div>
               </div>
             </div>
           </div>
